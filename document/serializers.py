@@ -21,8 +21,3 @@ class DocumentSerializer(serializers.ModelSerializer):
         
         return value
 
-    def validate(self, data):
-        file = data.get('file')
-        if file.size > 10 * 1024 * 1024:  # 10 MB (adjust as needed)
-            raise serializers.ValidationError("File size should not exceed 10 MB.")
-        return data
