@@ -1,0 +1,457 @@
+{
+	"info": {
+		"_postman_id": "52bf3084-a058-4c8f-ae9a-9f53bdfa740b",
+		"name": "DocumentManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29026314"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"al-jaber\",\n    \"email\": \"mailnishad02@gmail.com\",\n    \"password\": \"password12345!@#$%\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/user/register/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"al-jaber\",\n    \"password\": \"password12345!@#$%\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/user/login/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document Upload",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token 333baf19313ae9cd574b07f08570ef5288a07f71",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/nishad/Downloads/Backend Task.pdf"
+						},
+						{
+							"key": "Authorization",
+							"value": "token 333baf19313ae9cd574b07f08570ef5288a07f71",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": "Backend Test",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Test",
+							"type": "text"
+						},
+						{
+							"key": "format",
+							"value": "pdf",
+							"type": "text"
+						},
+						{
+							"key": "owner",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/document/document_upload/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"document",
+						"document_upload",
+						""
+					],
+					"query": [
+						{
+							"key": "Token",
+							"value": "333baf19313ae9cd574b07f08570ef5288a07f71",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Documents",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token 333baf19313ae9cd574b07f08570ef5288a07f71",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "Authorization",
+							"value": "token 333baf19313ae9cd574b07f08570ef5288a07f71",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": "Backend Test",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "Test",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "format",
+							"value": "pdf",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "owner",
+							"value": "2",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/document/all_documents/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"document",
+						"all_documents",
+						""
+					],
+					"query": [
+						{
+							"key": "Token",
+							"value": "333baf19313ae9cd574b07f08570ef5288a07f71",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document Download",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token 333baf19313ae9cd574b07f08570ef5288a07f71",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/document/download/1/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"document",
+						"download",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document Update",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token 333baf19313ae9cd574b07f08570ef5288a07f71",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "Authorization",
+							"value": "token 333baf19313ae9cd574b07f08570ef5288a07f71",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": "Backend Test Updated",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Test",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "format",
+							"value": "pdf",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "owner",
+							"value": "2",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/document/documents/1/update/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"document",
+						"documents",
+						"1",
+						"update",
+						""
+					],
+					"query": [
+						{
+							"key": "Token",
+							"value": "333baf19313ae9cd574b07f08570ef5288a07f71",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document Share",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token 333baf19313ae9cd574b07f08570ef5288a07f71",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"user_ids\" : [3]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/document/documents/1/share/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"document",
+						"documents",
+						"1",
+						"share",
+						""
+					],
+					"query": [
+						{
+							"key": "Token",
+							"value": "333baf19313ae9cd574b07f08570ef5288a07f71",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document Search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token 333baf19313ae9cd574b07f08570ef5288a07f71",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"user_ids\" : [3]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/document/documents/search/?query=Backend",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"document",
+						"documents",
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "Token",
+							"value": "333baf19313ae9cd574b07f08570ef5288a07f71",
+							"disabled": true
+						},
+						{
+							"key": "query",
+							"value": "Backend"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

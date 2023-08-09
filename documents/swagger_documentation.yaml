@@ -1,0 +1,311 @@
+openapi: 3.0.3
+info:
+  title: Django-Test
+  version: 1.0.0
+paths:
+  /document/all_documents/:
+    get:
+      operationId: document_all_documents_retrieve
+      tags:
+      - document
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /document/document_upload/:
+    post:
+      operationId: document_document_upload_create
+      tags:
+      - document
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /document/documents/{document_id}/delete/:
+    delete:
+      operationId: document_documents_delete_destroy
+      parameters:
+      - in: path
+        name: document_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - document
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /document/documents/{document_id}/share/:
+    post:
+      operationId: document_documents_share_create
+      parameters:
+      - in: path
+        name: document_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - document
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /document/documents/{document_id}/update/:
+    put:
+      operationId: document_documents_update_update
+      parameters:
+      - in: path
+        name: document_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - document
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /document/documents/search/:
+    get:
+      operationId: document_documents_search_retrieve
+      tags:
+      - document
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /document/download/{document_id}/:
+    get:
+      operationId: document_download_retrieve
+      parameters:
+      - in: path
+        name: document_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - document
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /document/shared-documents/:
+    get:
+      operationId: document_shared_documents_retrieve
+      tags:
+      - document
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /document/single_document/:
+    get:
+      operationId: document_single_document_retrieve
+      tags:
+      - document
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /user/login/:
+    post:
+      operationId: user_login_create
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /user/profile/:
+    get:
+      operationId: user_profile_retrieve
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: user_profile_update
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /user/register/:
+    post:
+      operationId: user_register_create
+      tags:
+      - user
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+components:
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
