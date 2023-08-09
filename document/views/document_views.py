@@ -1,3 +1,4 @@
+import io
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import status, permissions
@@ -8,14 +9,18 @@ from document.models import Document
 from document.serializers import DocumentListSerializer, DocumentSerializer
 from authentication.permissions import IsAdminOrOwner
 from django.contrib.auth.models import User
+from authentication.models import CustomUser
 from django.db.models import Q
+from django.core.files.base import ContentFile
+from docx import Document as DocxDocument
+from reportlab.pdfgen import canvas
 
 
 
 # Retrieve all documets
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
-def get_all_document(request):
+def all_document_view(request):
     try:
         documents = Document.objects.all()
 
@@ -28,8 +33,8 @@ def get_all_document(request):
 
 # Retrieve a document
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated, IsAdminOrOwner])
-def document_detail_view(request, document_id):
+@permission_classes([permissions.IsAuthenticated])
+def single_document_view(request, document_id):
 
     document = Document.objects.get(id=document_id)
 
@@ -74,16 +79,38 @@ def document_upload_view(request):
     filtered_data['description'] = data.get('description')
     filtered_data['format'] = data.get('format')
     filtered_data['file'] = data.get('file')
-    # owner_id = data.request.get('owner')
     filtered_data['owner'] = request.user.id
 
+    uploaded_file = data.get('file')
+    
+    if filtered_data['format'] == 'docx':
+        docx_content = uploaded_file.read()
+        pdf_content = convert_docx_to_pdf(docx_content)
+        pdf_file = ContentFile(pdf_content, name=uploaded_file.name.replace('.docx', '.pdf'))
+        filtered_data['file'] = pdf_file
+    
     serializer = DocumentSerializer(data=filtered_data)
+    
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+# Convert to pdf
+def convert_docx_to_pdf(docx_content):
+    doc = DocxDocument(ContentFile(docx_content))
+    pdf_content = io.BytesIO()
+    pdf_canvas = canvas.Canvas(pdf_content)
+    
+    for paragraph in doc.paragraphs:
+        pdf_canvas.drawString(10, 800, paragraph.text)
+        pdf_canvas.showPage()
+    
+    pdf_canvas.save()
+    pdf_content.seek(0)
+    return pdf_content.read()
 
 # Download a document
 @api_view(['GET'])
@@ -108,7 +135,7 @@ def document_download_view(request, document_id):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def document_search_view(request):
-    search_query = request.query_params.get('q', '')
+    search_query = request.query_params.get('query', '')
     
     documents = Document.objects.filter(
         Q(title__icontains=search_query) |
@@ -121,7 +148,7 @@ def document_search_view(request):
     return Response(serializer.data)
 
 
-#! Share Documents
+# Get list of share documents
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def shared_document_list_view(request):
@@ -129,6 +156,8 @@ def shared_document_list_view(request):
     serializer = DocumentListSerializer(shared_documents, many=True)
     return Response(serializer.data)
 
+
+# Share document
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated, IsAdminOrOwner])
 def share_document_view(request, document_id):
@@ -136,25 +165,13 @@ def share_document_view(request, document_id):
     
     user_ids = request.data.get('user_ids', [])
     for user_id in user_ids:
-        user = User.objects.get(id=user_id)
+        user = CustomUser.objects.get(id=user_id)
         document.shared_with.add(user)
     
     document.save()
     serializer = DocumentSerializer(document)
     return Response(serializer.data)
 
-
-
-
-
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated, IsAdminOrOwner])
-def admin_document_download_view(request, document_id):
-    document = get_object_or_404(Document, id=document_id)
-    file_path = document.file.path
-    response = FileResponse(open(file_path, 'rb'))
-    response['Content-Disposition'] = f'attachment; filename="{document.title}.{document.format}"'
-    return response
 
 
 # Search documentss
