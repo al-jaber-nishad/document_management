@@ -67,4 +67,5 @@ Follow these instructions to set up and run the project on your local machine.
 
 ### Authentication
 
+- Follow the postman collection to register and login
 - Token-based authentication is used. Include the token in the request headers as: `Authorization: Token <your_token>`
